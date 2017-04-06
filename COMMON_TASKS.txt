@@ -1,0 +1,334 @@
+package tasks.SystemGeneralTasks;
+
+import gralUtilities.LogMessages;
+import gralUtilities.ObjectGetter;
+import java.util.Calendar;
+
+import resources.tasks.SystemGeneralTasks.T_CommonHelper;
+
+import com.rational.test.ft.ObjectNotFoundException;
+import com.rational.test.ft.object.interfaces.TestObject;
+import com.rational.test.ft.object.interfaces.SAP.SAPGuiTabTestObject;
+import com.rational.test.ft.object.interfaces.SAP.SAPGuiTextTestObject;
+import com.rational.test.ft.object.interfaces.SAP.SAPGuiToggleTestObject;
+import com.rational.test.ft.script.RationalTestScript;
+import com.rational.test.ft.script.SubitemFactory;
+
+/**
+ * Contiene métodos que pueden ser usados por diferentes variantes. Script Name
+ * : <b>T_SapSystem</b> Generated : <b>Apr 28, 2014 1:51:49 PM</b> Description :
+ * Functional Test Script Original Host : WinNT Version 6.1 Build 7601 (S)
+ * 
+ * @since 2014/04/28
+ * @author Arrow Testing
+ */
+
+public class T_CommonTasks extends T_CommonHelper {
+
+	private static T_CommonTasks instance = null;
+
+	public static T_CommonTasks getInstance() {
+		if (instance == null)
+			instance = new T_CommonTasks();
+		return instance;
+	}
+
+	// ***************************** Utilidades de objetos
+	// ********************************
+
+	/**
+	 * Devuelve un CheckBox de acuerdo al nombre que tenga el checbox en el
+	 * label establece el foco en el checkbox éste método solo funciona cuando
+	 * no hay checkbox con nombres repetidos en toda la pantalla
+	 * 
+	 * @param checkBoxLabel
+	 * @return el checkbox
+	 * 
+	 * @author Arrow Testing
+	 */
+	public SAPGuiToggleTestObject getCheckBox(String checkBoxLabel) {
+		SAPGuiToggleTestObject checkBox = null;
+		try {
+			checkBox = new SAPGuiToggleTestObject(ObjectGetter.getInstance().getObject(".class", "GuiCheckBox", "Text", checkBoxLabel));
+			checkBox.setFocus();
+		} catch (ObjectNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+		return checkBox;
+	}
+
+	/**
+	 * Devuelve un radioButton de acuerdo al nombre que tenga el radioButton en
+	 * el label establece el foco en el radioButton éste método solo funciona
+	 * cuando no hay radioButtons con nombres repetidos en toda la pantalla
+	 * 
+	 * @param radioButtonLabel
+	 *            nombre del radioButton
+	 * @return el radioButton
+	 * 
+	 * @author Arrow Testing
+	 */
+	public SAPGuiToggleTestObject getRadioButton(String radioButtonLabel) {
+		SAPGuiToggleTestObject radioButton = null;
+		try {
+			radioButton = new SAPGuiToggleTestObject(ObjectGetter.getInstance().getObject(".class", "GuiRadioButton", "Text", radioButtonLabel));
+			radioButton.setFocus();
+		} catch (ObjectNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+		return radioButton;
+	}
+
+	/**
+	 * Devuelve un tab de acuerdo al nombre que tenga establece el foco en el
+	 * tab éste método solo funciona cuando no hay tabs con nombres repetidos en
+	 * toda la pantalla
+	 * 
+	 * @param tabLabel
+	 * @return tab
+	 * 
+	 * @author Arrow Testing
+	 */
+	public SAPGuiTabTestObject getTab(String tabLabel) {
+		SAPGuiTabTestObject tab = null;
+		try {
+			tab = new SAPGuiTabTestObject(ObjectGetter.getInstance().getObject(".class", "GuiTab", "Text", tabLabel));
+			tab.setFocus();
+		} catch (ObjectNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+		return tab;
+	}
+
+	/**
+	 * Compara el texto enviado como parámetro contra el contenido de un campo
+	 * de texto enviado también como parámetro.
+	 * 
+	 * @param stepNum
+	 * @param transactionName
+	 * @param field
+	 * @param componentName
+	 * @param expectedResult
+	 * @param currentResult
+	 * 
+	 * @since Nov 1, 2013
+	 * @author Adriana Rodríguez
+	 */
+	public void verifyTextFieldContent(int stepNum, String transactionName, SAPGuiTextTestObject field, String componentName, String expectedResult) {
+
+		String currentResult = field.getProperty("Text").toString();
+
+		if (currentResult.contains(expectedResult))
+			LogMessages.addPositiveVerificationValueMessage(stepNum++, transactionName, componentName, expectedResult, currentResult);
+		else
+			LogMessages.addNegativeVerificationValueMessage(stepNum++, transactionName, componentName, expectedResult, currentResult);
+	}
+
+	// ***************************** Utilidades generales
+	// ********************************
+
+	/**
+	 * Regresa un identificador único
+	 * 
+	 * @author Arrow Testing
+	 * 
+	 * @return un ID
+	 */
+	public String getIdentificador() {
+		Calendar calendar = Calendar.getInstance();
+		return Integer.toString(calendar.get(Calendar.SECOND)) + Integer.toString(calendar.get(Calendar.MINUTE));
+	}
+	/**
+	 * regresa el formato de la unidad de manipulacion
+	 *
+	 * 
+	 *
+	 * @since  07/11/2014
+	 * @author Oswaldo Arana
+	 */
+	public String getUnidadManipulacion(String material){
+		String fecha=T_Dates.getInstance().getCurrentYear();
+		fecha.length();
+		return "200001"+material+T_Dates.getInstance().getJuliana()+fecha.length()+"0001";
+	}
+	
+	/**
+	 * Regresa la unidad de manipulacion Genera la unidad de manipulacion
+	 * es almacen + linea + material + dias transcurridos del año en 3 digitos + (año actual - 2010) + identificador HHMM
+	 *
+	 * Ejemplo:  2000 02 139011 21761345
+	 *
+	 * @since  04/08/2016
+	 * @author Miguel Hernández
+	 */
+	public String getUnidadManipulacionEC(String almacen, String linea, String material){
+		
+		//Obtiene el numero de días transcurridos del año
+		String dias = T_Dates.getInstance().getCurrentDayNumber();
+		
+		//Obtiene el año actual
+		String anio = T_Dates.getInstance().getCurrentYear();
+		int a = Integer.parseInt(anio);
+		
+		//Obtiene el identificador del año de 1 digito (año actual - 2010)
+		int iAnio = a-2010;
+		
+		//Obtiene identificador por la hora
+		String iHora = T_Dates.getInstance().getCurrentHourMinIdentificador();
+		
+		//Regresa la UM completa
+		return almacen+linea+material+dias+iAnio+iHora;
+	}
+	
+	/**
+	 * regresa el formato de la HU
+	 *
+	 * 
+	 *
+	 * @since  07/11/2014
+	 * @author Oswaldo Arana
+	 */
+	public String getHU(String material){
+		String fecha=T_Dates.getInstance().getCurrentYear();
+		fecha.length();
+		System.out.println("HU:  200001"+material+T_Dates.getInstance().getJuliana2()+fecha.length());
+		return "200001"+material+T_Dates.getInstance().getJuliana2()+fecha.length();
+	}
+	/**
+	 * <p>
+	 * Quita los ceros a la izquierda de un numero.
+	 * </p>
+	 * <p>
+	 * <i>Ejemplo: 00123 -> 123</i>
+	 * </p>
+	 * 
+	 * @author Abraham Sanchez
+	 */
+	public String removeLeadingZeros(String numberString) {
+		// No es la implementacion mas rapida, pero el codigo es simple
+		while (numberString.startsWith("0"))
+			numberString = numberString.substring(1);
+		return numberString;
+	}
+
+	/**
+	 * Pone el foto en el objeto especificado como parámetro
+	 * 
+	 * @author Abraham Sanchez
+	 */
+	public void setFocus(TestObject widget) {
+		// Set the focus to the component
+		try {
+			SAPGuiTextTestObject obj1 = new SAPGuiTextTestObject(widget);
+			obj1.setFocus();
+
+			// Move to the next component and then return, so, the object should
+			// be visible now
+			RationalTestScript.getScreen().inputKeys("{TAB}");
+			RationalTestScript.getScreen().inputKeys("+{TAB}");
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	/**
+	 * Mouse double click where the mouse is currently placed
+	 * 
+	 * @author Arrow Testing
+	 */
+	@SuppressWarnings("static-access")
+	public void mouseDoubleClick() {
+		this.getRootTestObject().emitLowLevelEvent(new SubitemFactory().leftMouseButtonDown());
+		this.getRootTestObject().emitLowLevelEvent(new SubitemFactory().leftMouseButtonUp());
+		this.getRootTestObject().emitLowLevelEvent(new SubitemFactory().leftMouseButtonDown());
+		this.getRootTestObject().emitLowLevelEvent(new SubitemFactory().leftMouseButtonUp());
+	}
+
+	/**
+	 * Mouse single click where the mouse is currently placed
+	 * 
+	 * @author Arrow Testing
+	 */
+	@SuppressWarnings("static-access")
+	public void mouseSingleClick() {
+		this.getRootTestObject().emitLowLevelEvent(new SubitemFactory().leftMouseButtonDown());
+		this.getRootTestObject().emitLowLevelEvent(new SubitemFactory().leftMouseButtonUp());
+	}
+	
+	/**
+	 * 
+	 *
+	 * </br>
+	 * </br><b>Variante:</b>
+	 *
+	 * @param variante  Nombre del proceso de la variante ejemplo: Derecho de Mercado
+	 * @param descripcion Descripción de la variante de prueba ejemplo: Cliente Detallistas Mercado Abierto Deducible
+	 * @param nombre    Nombre completo del script Ejemplo:getScriptName()
+	 * @param proyecto  Nombre del proyecto: Arrow
+	 *
+	 * @since  03/07/2014
+	 * @author Piero Zapata
+	 */
+	public void startTestCase(String variante,String descripcion,String nombre,String proyecto){
+		LogMessages.addStartTestSuiteMessage(nombre);
+		LogMessages.addStartTestCaseMessage(variante, descripcion,nombre, proyecto);
+	
+	}
+	
+	/**
+	 * Cierra el testcase y testSuite además de terminar la ejecución de la prueba
+	 *
+	 * @since  03/07/2014
+	 * @author Piero Zapata
+	 */
+	public void endTestCase(){
+		LogMessages.addCloseTestCaseMessage();
+		LogMessages.addCloseTestSuiteMessage();
+		System.exit(0);
+	}
+	
+	/**
+	 * Cierra el testcase y testSuite además de terminar la ejecución de la prueba
+	 *
+	 * @since  08/06/2015
+	 * @author Miguel Hernández
+	 */
+	public void endTestCaseWEB(){
+		LogMessages.addCloseTestCaseMessage();
+		LogMessages.addCloseTestSuiteMessage();
+	}
+	
+	/**
+	 * Cierra el testcase y testSuite además de terminar la ejecución de la prueba
+	 *
+	 * @since  03/07/2014
+	 * @author Piero Zapata
+	 */
+	public void endTestCase(boolean isCorrect){
+		LogMessages.addCloseTestCaseMessage();
+		LogMessages.addCloseTestSuiteMessage();
+		System.out.println(T_Dates.getInstance().getCurrentHour());
+	}
+	
+	
+public String getUnidadManipulacionEC_cantidad6(String almacen, String linea, String material){
+		
+		//Obtiene el numero de días transcurridos del año
+		String dias = T_Dates.getInstance().getCurrentDayNumber();
+		
+		//Obtiene el año actual
+		String anio = T_Dates.getInstance().getCurrentYear();
+		int a = Integer.parseInt(anio);
+		
+		//Obtiene el identificador del año de 1 digito (año actual - 2010)
+		int iAnio = a-2010;
+		
+		//Obtiene identificador por la hora
+		String iHora = T_Dates.getInstance().getCurrentHourMinIdentificadorSS();
+		
+		//Regresa la UM completa
+		return almacen+linea+material+dias+iAnio+iHora;
+	}
+	
+}
