@@ -3,7 +3,7 @@ package tasks.SystemGeneralTasks;
 import gralUtilities.LogMessages;
 import gralUtilities.ObjectGetter;
 import java.util.Calendar;
-
+//TACOS
 import resources.tasks.SystemGeneralTasks.T_CommonHelper;
 
 import com.rational.test.ft.ObjectNotFoundException;
@@ -15,7 +15,7 @@ import com.rational.test.ft.script.RationalTestScript;
 import com.rational.test.ft.script.SubitemFactory;
 
 /**
- * Contiene mÈtodos que pueden ser usados por diferentes variantes. Script Name
+ * Contiene m√©todos que pueden ser usados por diferentes variantes. Script Name
  * : <b>T_SapSystem</b> Generated : <b>Apr 28, 2014 1:51:49 PM</b> Description :
  * Functional Test Script Original Host : WinNT Version 6.1 Build 7601 (S)
  * 
@@ -38,7 +38,7 @@ public class T_CommonTasks extends T_CommonHelper {
 
 	/**
 	 * Devuelve un CheckBox de acuerdo al nombre que tenga el checbox en el
-	 * label establece el foco en el checkbox Èste mÈtodo solo funciona cuando
+	 * label establece el foco en el checkbox √©ste m√©todo solo funciona cuando
 	 * no hay checkbox con nombres repetidos en toda la pantalla
 	 * 
 	 * @param checkBoxLabel
@@ -59,7 +59,7 @@ public class T_CommonTasks extends T_CommonHelper {
 
 	/**
 	 * Devuelve un radioButton de acuerdo al nombre que tenga el radioButton en
-	 * el label establece el foco en el radioButton Èste mÈtodo solo funciona
+	 * el label establece el foco en el radioButton √©ste m√©todo solo funciona
 	 * cuando no hay radioButtons con nombres repetidos en toda la pantalla
 	 * 
 	 * @param radioButtonLabel
@@ -81,7 +81,7 @@ public class T_CommonTasks extends T_CommonHelper {
 
 	/**
 	 * Devuelve un tab de acuerdo al nombre que tenga establece el foco en el
-	 * tab Èste mÈtodo solo funciona cuando no hay tabs con nombres repetidos en
+	 * tab √©ste m√©todo solo funciona cuando no hay tabs con nombres repetidos en
 	 * toda la pantalla
 	 * 
 	 * @param tabLabel
@@ -101,8 +101,8 @@ public class T_CommonTasks extends T_CommonHelper {
 	}
 
 	/**
-	 * Compara el texto enviado como par·metro contra el contenido de un campo
-	 * de texto enviado tambiÈn como par·metro.
+	 * Compara el texto enviado como par√°metro contra el contenido de un campo
+	 * de texto enviado tambi√©n como par√°metro.
 	 * 
 	 * @param stepNum
 	 * @param transactionName
@@ -112,7 +112,7 @@ public class T_CommonTasks extends T_CommonHelper {
 	 * @param currentResult
 	 * 
 	 * @since Nov 1, 2013
-	 * @author Adriana RodrÌguez
+	 * @author Adriana Rodr√≠guez
 	 */
 	public void verifyTextFieldContent(int stepNum, String transactionName, SAPGuiTextTestObject field, String componentName, String expectedResult) {
 
@@ -128,7 +128,7 @@ public class T_CommonTasks extends T_CommonHelper {
 	// ********************************
 
 	/**
-	 * Regresa un identificador ˙nico
+	 * Regresa un identificador √∫nico
 	 * 
 	 * @author Arrow Testing
 	 * 
@@ -154,23 +154,23 @@ public class T_CommonTasks extends T_CommonHelper {
 	
 	/**
 	 * Regresa la unidad de manipulacion Genera la unidad de manipulacion
-	 * es almacen + linea + material + dias transcurridos del aÒo en 3 digitos + (aÒo actual - 2010) + identificador HHMM
+	 * es almacen + linea + material + dias transcurridos del a√±o en 3 digitos + (a√±o actual - 2010) + identificador HHMM
 	 *
 	 * Ejemplo:  2000 02 139011 21761345
 	 *
 	 * @since  04/08/2016
-	 * @author Miguel Hern·ndez
+	 * @author Miguel Hern√°ndez
 	 */
 	public String getUnidadManipulacionEC(String almacen, String linea, String material){
 		
-		//Obtiene el numero de dÌas transcurridos del aÒo
+		//Obtiene el numero de d√≠as transcurridos del a√±o
 		String dias = T_Dates.getInstance().getCurrentDayNumber();
 		
-		//Obtiene el aÒo actual
+		//Obtiene el a√±o actual
 		String anio = T_Dates.getInstance().getCurrentYear();
 		int a = Integer.parseInt(anio);
 		
-		//Obtiene el identificador del aÒo de 1 digito (aÒo actual - 2010)
+		//Obtiene el identificador del a√±o de 1 digito (a√±o actual - 2010)
 		int iAnio = a-2010;
 		
 		//Obtiene identificador por la hora
@@ -212,7 +212,7 @@ public class T_CommonTasks extends T_CommonHelper {
 	}
 
 	/**
-	 * Pone el foto en el objeto especificado como par·metro
+	 * Pone el foto en el objeto especificado como par√°metro
 	 * 
 	 * @author Abraham Sanchez
 	 */
@@ -263,7 +263,7 @@ public class T_CommonTasks extends T_CommonHelper {
 	 * </br><b>Variante:</b>
 	 *
 	 * @param variante  Nombre del proceso de la variante ejemplo: Derecho de Mercado
-	 * @param descripcion DescripciÛn de la variante de prueba ejemplo: Cliente Detallistas Mercado Abierto Deducible
+	 * @param descripcion Descripci√≥n de la variante de prueba ejemplo: Cliente Detallistas Mercado Abierto Deducible
 	 * @param nombre    Nombre completo del script Ejemplo:getScriptName()
 	 * @param proyecto  Nombre del proyecto: Arrow
 	 *
@@ -277,7 +277,7 @@ public class T_CommonTasks extends T_CommonHelper {
 	}
 	
 	/**
-	 * Cierra el testcase y testSuite adem·s de terminar la ejecuciÛn de la prueba
+	 * Cierra el testcase y testSuite adem√°s de terminar la ejecuci√≥n de la prueba
 	 *
 	 * @since  03/07/2014
 	 * @author Piero Zapata
@@ -289,10 +289,10 @@ public class T_CommonTasks extends T_CommonHelper {
 	}
 	
 	/**
-	 * Cierra el testcase y testSuite adem·s de terminar la ejecuciÛn de la prueba
+	 * Cierra el testcase y testSuite adem√°s de terminar la ejecuci√≥n de la prueba
 	 *
 	 * @since  08/06/2015
-	 * @author Miguel Hern·ndez
+	 * @author Miguel Hern√°ndez
 	 */
 	public void endTestCaseWEB(){
 		LogMessages.addCloseTestCaseMessage();
@@ -300,7 +300,7 @@ public class T_CommonTasks extends T_CommonHelper {
 	}
 	
 	/**
-	 * Cierra el testcase y testSuite adem·s de terminar la ejecuciÛn de la prueba
+	 * Cierra el testcase y testSuite adem√°s de terminar la ejecuci√≥n de la prueba
 	 *
 	 * @since  03/07/2014
 	 * @author Piero Zapata
@@ -314,14 +314,14 @@ public class T_CommonTasks extends T_CommonHelper {
 	
 public String getUnidadManipulacionEC_cantidad6(String almacen, String linea, String material){
 		
-		//Obtiene el numero de dÌas transcurridos del aÒo
+		//Obtiene el numero de d√≠as transcurridos del a√±o
 		String dias = T_Dates.getInstance().getCurrentDayNumber();
 		
-		//Obtiene el aÒo actual
+		//Obtiene el a√±o actual
 		String anio = T_Dates.getInstance().getCurrentYear();
 		int a = Integer.parseInt(anio);
 		
-		//Obtiene el identificador del aÒo de 1 digito (aÒo actual - 2010)
+		//Obtiene el identificador del a√±o de 1 digito (a√±o actual - 2010)
 		int iAnio = a-2010;
 		
 		//Obtiene identificador por la hora
